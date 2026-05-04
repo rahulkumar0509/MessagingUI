@@ -1,0 +1,21 @@
+<form [formGroup]="chatForm" style="display: flex;flex-direction: column;width: 100%">
+  <div>
+    <label>To:</label> 
+    <input type="text" name="receiver" placeholder="enter receiver email address" formControlName="receiver"/>
+  </div>
+  <div>
+    <label>Message:</label> 
+    <input type="text" name="message" placeholder="enter your message" formControlName="message"/>
+  </div>
+  <div style="justify-content: center;">
+    <button type="button" (click)="sendMessage()">Send</button>
+  </div>
+</form>
+<div style="margin-top: 50px; flex-direction: column;">
+  <div>
+    Message From: {{messageFrom}}
+  </div>
+  <div> 
+    Message: {{messageReceived}}
+  </div>
+</div>

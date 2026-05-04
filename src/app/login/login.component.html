@@ -1,0 +1,6 @@
+<form [formGroup]="loginForm">
+    Email: <input type="text" formControlName="email" name="email" />
+    <button type="button" (click)="loginUser()">Login</button>
+</form>
+
+<button type="button" (click)="redirectToChat()">Chat</button>
