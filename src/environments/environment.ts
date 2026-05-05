@@ -1,3 +1,3 @@
 export const environment = {
-    messageApiUrl : "https://message-axeyhug9hcdhamfn.centralindia-01.azurewebsites.net"
+    messageApiUrl : "http://localhost:5010"
 };

@@ -5,7 +5,7 @@ import { CommonModule } from '@angular/common';
 import { catchError, debounceTime, throwError } from 'rxjs';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { LoginResponse } from '../login/login.component';
-import { environment } from '../../environments/environment.development';
+import { environment } from '../../environments/environment.prod';
 
 @Component({
   selector: 'app-chat',
