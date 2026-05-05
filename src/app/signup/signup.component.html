@@ -1,0 +1,12 @@
+<form [formGroup]="singupForm">
+    Email: <input type="text" formControlName="email" name="email" />
+    Phone: <input type="text" formControlName="phone" name="phone" />
+    Name: <input type="text" formControlName="name" name="name" />
+    Age: <input type="text" formControlName="age" name="age" />
+    Sex: <input type="text" formControlName="sex" name="sex" />
+    <button type="button" (click)="Signup()">Signup</button>
+</form>
+
+<div style="margin-top: 20px">
+    Go to Login: <button type="button" (click)="login()">Login</button>
+</div>

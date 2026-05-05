@@ -3,8 +3,9 @@ import { Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { catchError, throwError } from 'rxjs';
+import { environment } from '../../environments/environment.development';
 
-interface LoginResponse{
+export interface LoginResponse{
   accessToken: string;
 }
 
@@ -28,10 +29,8 @@ export class LoginComponent implements OnInit{
   }
 
   loginUser(){
-    // new HttpHeaders({
-    //   'Authorization': 'Bearer ' + localStorage.getItem
-    // })
-    this.http.get<LoginResponse>(`http://localhost:5010/login?Email=${this.loginForm.value.email}&Password=pass`).pipe(catchError(this.handleError)).subscribe({
+    let apirUrl = environment.messageApiUrl;
+    this.http.get<LoginResponse>(`${apirUrl}/login?Email=${this.loginForm.value.email}`).pipe(catchError(this.handleError)).subscribe({
       next: (v)=>{
         sessionStorage.setItem("accessToken", v.accessToken);
         sessionStorage.setItem("userEmail", this.loginForm.value.email);
@@ -46,8 +45,6 @@ export class LoginComponent implements OnInit{
   handleError(err: HttpErrorResponse){
     if(err.status == 401){
       console.log("Unauthorized");
-      // this.router.navigateByUrl("")
-
     }
     return throwError(()=> new Error("something went wrong!"));
   }

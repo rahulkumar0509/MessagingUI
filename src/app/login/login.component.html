@@ -1,6 +1,17 @@
-<form [formGroup]="loginForm">
-    Email: <input type="text" formControlName="email" name="email" />
-    <button type="button" (click)="loginUser()">Login</button>
-</form>
+<div class="login">
+    <div class="header">
+        <h1>Moonblink</h1>
+    </div>
+    <div class="content">
+        <form [formGroup]="loginForm">
+            <input type="text" placeholder="Enter your email" formControlName="email" name="email" />
+        </form>
+        
+    </div>
+    <div class="footer">
+        <button type="button" (click)="loginUser()">Login</button>
+    </div>
+</div>
+<!-- 
 
-<button type="button" (click)="redirectToChat()">Chat</button>
+<button type="button" (click)="redirectToChat()">Chat</button> -->

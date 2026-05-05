@@ -1,21 +1,44 @@
-<form [formGroup]="chatForm" style="display: flex;flex-direction: column;width: 100%">
-  <div>
-    <label>To:</label> 
-    <input type="text" name="receiver" placeholder="enter receiver email address" formControlName="receiver"/>
+<div class="chat">
+  <div class="header">
+    <h1>Moonblink</h1>
   </div>
-  <div>
-    <label>Message:</label> 
-    <input type="text" name="message" placeholder="enter your message" formControlName="message"/>
+  <div class="content">
+    <div *ngIf="receiverEmailValid" style="flex-direction: column;">
+      <div>
+        From: {{messageFrom}}
+      </div>
+      <div class="message-box">
+        <div *ngFor="let msg of messageList" style="padding-top: 1px;">
+          <p *ngIf="msg.from == 'sent'" style="text-align: right;">
+            <span class="message-wrapper">{{msg.message}}</span>
+          </p>
+          <p *ngIf="msg.from == 'received'" >
+            <span class="message-wrapper">{{msg.message}}</span>
+          </p>
+        </div>
+      </div>
+    </div>
+    <form [formGroup]="chatForm" style="display: flex;flex-direction: column;width: 100%">
+      <div *ngIf="!receiverEmailValid">
+        <input type="text" name="receiver" placeholder="Enter Receiver Email Address" formControlName="receiver" />
+      </div>
+      <div *ngIf="chatForm.get('receiver')?.invalid && chatForm.get('receiver')?.dirty">
+        Invalid email address!
+      </div>
+      <div *ngIf="userNotFound">
+        Ask the user to register himself!
+      </div>
+      <div *ngIf="!receiverEmailValid" style="margin-top: 20px;text-align: center;">
+        <button type="button" (click)="next()">Next</button>
+      </div>
+      <div style="margin-top: 20px;" *ngIf="receiverEmailValid">
+        <input type="text" name="message" placeholder="Enter your message" formControlName="message" />
+      </div>
+    </form>
   </div>
-  <div style="justify-content: center;">
-    <button type="button" (click)="sendMessage()">Send</button>
-  </div>
-</form>
-<div style="margin-top: 50px; flex-direction: column;">
-  <div>
-    Message From: {{messageFrom}}
-  </div>
-  <div> 
-    Message: {{messageReceived}}
+  <div class="footer" *ngIf="receiverEmailValid">
+    <div>
+      <button type="button" (click)="sendMessage()">Send</button>
+    </div>
   </div>
 </div>

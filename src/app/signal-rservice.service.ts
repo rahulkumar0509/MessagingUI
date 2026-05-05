@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import * as signalR from '@microsoft/signalr';
 import { Subject } from 'rxjs';
+import { environment } from '../environments/environment.development';
 
 @Injectable({
   providedIn: 'root'
@@ -26,8 +27,9 @@ export class SignalRServiceService {
 
   public startConnection = ()=>{
     // build connection
+    let apirUrl = environment.messageApiUrl;
     this.hubConnection = new signalR.HubConnectionBuilder()
-      .withUrl("http://localhost:5010/chat", {
+      .withUrl(`${apirUrl}/chat`, {
         accessTokenFactory: ()=> sessionStorage.getItem("accessToken") || ""
       })
       .withAutomaticReconnect().build();
