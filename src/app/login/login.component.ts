@@ -4,56 +4,96 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { Router } from '@angular/router';
 import { catchError, throwError } from 'rxjs';
 import { environment } from '../../environments/environment.prod';
+import { PublicClientApplication } from '@azure/msal-browser';
+import { CommonModule } from '@angular/common';
 
-export interface LoginResponse{
+export interface LoginResponse {
   accessToken: string;
 }
 
 @Component({
   selector: 'app-login',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, CommonModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
 })
-export class LoginComponent implements OnInit{
+export class LoginComponent implements OnInit {
   private http: HttpClient = inject(HttpClient);
+  private msalApp = inject(PublicClientApplication);
+
   // private router!: Router;
   loginForm!: FormGroup;
   fb = inject(FormBuilder);
   router = inject(Router);
 
-  ngOnInit(): void {
+  isLoggedIn = false;
+  userName = '';
+
+  msalLogin = true;
+
+  async ngOnInit() {
     this.loginForm = this.fb.group({
       email: ['', Validators.required]
     })
+    const response = await this.msalApp.handleRedirectPromise();
+    if (response) {
+      this.msalApp.setActiveAccount(response.account);
+    }
+    this.checkAccount();
   }
 
-  loginUser(){
+  checkAccount() {
+    const activeAccount = this.msalApp.getActiveAccount();
+    if (activeAccount) {
+      this.isLoggedIn = true;
+      this.userName = activeAccount.name || '';
+    }
+  }
+
+  async loginUser() {
+    if (this.msalLogin) {
+      try {
+        const loginResponse = await this.msalApp.loginPopup({
+          scopes: ['User.Read'] // Standard profile permission
+        });
+        this.msalApp.setActiveAccount(loginResponse.account);
+        this.checkAccount();
+      } catch (error) {
+        console.error('Login failed:', error);
+      }
+      return;
+    }
+    
     let apirUrl = environment.messageApiUrl;
     this.http.get<LoginResponse>(`${apirUrl}/login?Email=${this.loginForm.value.email}`).pipe(catchError(this.handleError)).subscribe({
-      next: (v)=>{
+      next: (v) => {
         sessionStorage.setItem("accessToken", v.accessToken);
         sessionStorage.setItem("userEmail", this.loginForm.value.email);
         this.router.navigateByUrl("chat");
       },
-      error: (e)=>{
+      error: (e) => {
         console.log(e);
       }
     })
   }
 
-  handleError(err: HttpErrorResponse){
-    if(err.status == 401){
+  logout() {
+    this.msalApp.logoutPopup();
+    this.isLoggedIn = false;
+  }
+
+  handleError(err: HttpErrorResponse) {
+    if (err.status == 401) {
       console.log("Unauthorized");
     }
-    return throwError(()=> new Error("something went wrong!"));
+    return throwError(() => new Error("something went wrong!"));
   }
-  redirectToChat(){
+  redirectToChat() {
     this.router.navigateByUrl("chat");
   }
-  
-  takeToHome(){
+
+  takeToHome() {
     this.router.navigateByUrl("");
   }
-  
+
 }
