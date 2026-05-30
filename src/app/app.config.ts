@@ -14,6 +14,7 @@ const msalInstance = new PublicClientApplication({
   },
   cache: {
     cacheLocation: BrowserCacheLocation.LocalStorage
+    
   }
 });
 
