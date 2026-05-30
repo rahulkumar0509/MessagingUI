@@ -8,7 +8,7 @@ import { PublicClientApplication, BrowserCacheLocation } from '@azure/msal-brows
 // Paste your actual IDs here
 const msalInstance = new PublicClientApplication({
   auth: {
-    clientId: 'fc530a19-8028-44b7-923a-d6c547712d02', 
+    clientId: 'a4dd4c5f-fda6-4bde-8f21-cbc02d0bf15f', 
     authority: 'https://login.microsoftonline.com/66861b95-153a-4de5-9e9e-4f21625e3d01', 
     redirectUri: 'https://yellow-bay-0b3d1841e.7.azurestaticapps.net/' 
   },
