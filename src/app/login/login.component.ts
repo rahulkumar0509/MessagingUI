@@ -35,6 +35,7 @@ export class LoginComponent implements OnInit {
     this.loginForm = this.fb.group({
       email: ['', Validators.required]
     })
+    await this.msalApp.initialize();
     const response = await this.msalApp.handleRedirectPromise();
     if (response) {
       this.msalApp.setActiveAccount(response.account);
@@ -63,7 +64,7 @@ export class LoginComponent implements OnInit {
       }
       return;
     }
-    
+
     let apirUrl = environment.messageApiUrl;
     this.http.get<LoginResponse>(`${apirUrl}/login?Email=${this.loginForm.value.email}`).pipe(catchError(this.handleError)).subscribe({
       next: (v) => {
