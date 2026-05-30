@@ -51,4 +51,9 @@ export class LoginComponent implements OnInit{
   redirectToChat(){
     this.router.navigateByUrl("chat");
   }
+  
+  takeToHome(){
+    this.router.navigateByUrl("");
+  }
+  
 }

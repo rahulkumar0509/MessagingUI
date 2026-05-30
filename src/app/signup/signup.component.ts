@@ -53,4 +53,8 @@ export class SignupComponent implements OnInit{
     }
     return throwError(()=> new Error("something went wrong!"));
   }
+
+  takeToHome(){
+    this.router.navigateByUrl("");
+  }
 }

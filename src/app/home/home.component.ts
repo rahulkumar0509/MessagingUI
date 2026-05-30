@@ -12,4 +12,8 @@ export class HomeComponent {
   login(){
     this.router.navigateByUrl("login");
   }
+
+  takeToHome(){
+    this.router.navigateByUrl("");
+  }
 }

@@ -6,6 +6,7 @@ import { catchError, debounceTime, throwError } from 'rxjs';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { LoginResponse } from '../login/login.component';
 import { environment } from '../../environments/environment.prod';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-chat',
@@ -22,6 +23,7 @@ export class ChatComponent {
   receiverEmailValid = false;
   http = inject(HttpClient);
   userNotFound = false;
+  router = inject(Router);
 
   ngOnInit(): void {
     this.chatForm = this.fb.group({
@@ -67,5 +69,9 @@ export class ChatComponent {
       console.log("Unauthorized");
     }
     return throwError(()=> new Error("something went wrong!"));
+  }
+
+  takeToHome(){
+    this.router.navigateByUrl("");
   }
 }

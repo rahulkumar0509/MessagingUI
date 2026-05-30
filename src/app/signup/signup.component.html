@@ -1,4 +1,4 @@
-<form [formGroup]="singupForm">
+<form [formGroup]="singupForm" (click)="takeToHome()">
     Email: <input type="text" formControlName="email" name="email" />
     Phone: <input type="text" formControlName="phone" name="phone" />
     Name: <input type="text" formControlName="name" name="name" />
