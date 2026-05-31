@@ -3,10 +3,15 @@ import { LoginComponent } from './login/login.component';
 import { ChatComponent } from './chat/chat.component';
 import { SignupComponent } from './signup/signup.component';
 import { HomeComponent } from './home/home.component';
+import { AuthCallbackComponentComponent } from './auth-callback-component/auth-callback-component.component';
 
 export const routes: Routes = [
     {
         path: 'chat', component: ChatComponent
+    },
+    {
+        path: 'auth',
+        component: AuthCallbackComponentComponent
     },
     {
         path: 'login', component: LoginComponent
