@@ -26,19 +26,19 @@ export class ChatComponent {
   router = inject(Router);
 
   ngOnInit(): void {
-    alert("chat ..")
-    // this.chatForm = this.fb.group({
-    //   sender: ['', Validators.required],
-    //   receiver: ['', [Validators.required, Validators.email]],
-    //   message: ['', Validators.required]
-    // });
+    // alert("chat ..")
+    this.chatForm = this.fb.group({
+      sender: ['', Validators.required],
+      receiver: ['', [Validators.required, Validators.email]],
+      message: ['', Validators.required]
+    });
 
-    // this.signalRService.startConnection();
-    // this.signalRService.messageSubject$.subscribe((v: { user: string, message: string }) => {
-    //   this.messageFrom = v['user'];
-    //   this.messageList.push({from: 'received', message: v['message']});
-    //   // console.log("data:" + JSON.stringify(v));
-    // });
+    this.signalRService.startConnection();
+    this.signalRService.messageSubject$.subscribe((v: { user: string, message: string }) => {
+      this.messageFrom = v['user'];
+      this.messageList.push({from: 'received', message: v['message']});
+      // console.log("data:" + JSON.stringify(v));
+    });
   }
 
   sendMessage() {
@@ -73,6 +73,6 @@ export class ChatComponent {
   }
 
   takeToHome(){
-    // this.router.navigateByUrl("");
+    this.router.navigateByUrl("");
   }
 }

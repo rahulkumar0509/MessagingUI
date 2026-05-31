@@ -1,5 +1,5 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Router, RouterOutlet } from '@angular/router';
 import { MsalService } from '@azure/msal-angular';
 
 @Component({
@@ -11,13 +11,20 @@ import { MsalService } from '@azure/msal-angular';
 export class AppComponent implements OnInit {
   title = 'MessagingUI';
   private msalService = inject(MsalService);
+  private router = inject(Router);
 
   async ngOnInit() {
     console.log('Current URL:', window.location.href);
     await this.msalService.instance.initialize();
-    const response = await this.msalService.instance.handleRedirectPromise();
+
+    const response =
+      await this.msalService.instance.handleRedirectPromise();
+
     if (response?.account) {
-      this.msalService.instance.setActiveAccount(response.account);
+      this.msalService.instance.setActiveAccount(
+        response.account
+      );
+      this.router.navigate(['/chat']);
     }
   }
 

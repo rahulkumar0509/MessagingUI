@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { catchError, throwError } from 'rxjs';
 import { environment } from '../../environments/environment.prod';
 import { CommonModule } from '@angular/common';
+import { MsalService } from '@azure/msal-angular';
 
 export interface LoginResponse {
   accessToken: string;
@@ -21,6 +22,7 @@ export class LoginComponent implements OnInit {
   private http: HttpClient = inject(HttpClient);
   private fb = inject(FormBuilder);
   private router = inject(Router);
+  private msalService = inject(MsalService);
 
   loginForm!: FormGroup;
   isLoggedIn = false;
@@ -33,6 +35,13 @@ export class LoginComponent implements OnInit {
     });
   }
 
+  login() {
+    this.msalService.instance.loginRedirect({
+      scopes: ['openid', 'profile', 'email']
+    });
+  }
+
+  
   async loginUser() {
 
     // Custom API login below...
