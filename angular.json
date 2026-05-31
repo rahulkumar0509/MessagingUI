@@ -29,7 +29,8 @@
               {
                 "glob": "**/*",
                 "input": "public"
-              }
+              },
+              "public/staticwebapp.config.json"
             ],
             "styles": [
               "src/styles.scss"
