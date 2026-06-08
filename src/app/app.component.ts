@@ -24,28 +24,39 @@ export class AppComponent implements OnInit {
       this.msalService.instance.setActiveAccount(
         response.account
       );
-      this.router.navigate(['/chat']);
+      // this.router.navigate(['/chat']);
     }
   }
 
-  async login() {
-    alert("login button")
-    try {
-      const result = await this.msalService.instance.loginRedirect({
-        scopes: ['openid', 'profile', 'email'],
-        prompt: 'select_account'
-      });
+  // async login() {
+  //   alert("login button")
+  //   try {
+  //     const result = await this.msalService.instance.loginRedirect({
+  //       scopes: ['openid', 'profile', 'email', 'api://1d3b040d-8718-427f-a3b0-f194941f9643/access_as_user'],
+  //       prompt: 'select_account'
+  //     });
 
-    } catch (error) {
-      console.error(error);
-    }
-  }
+  //     const token =
+  //       await this.msalService.instance.acquireTokenSilent({
+  //         scopes: [    
+  //           'api://1d3b040d-8718-427f-a3b0-f194941f9643/access_as_user'
+  //         ],
+  //         account:
+  //           this.msalService.instance.getActiveAccount()!
+  //       });
 
-  logout() {
-    this.msalService.logoutPopup();
-  }
+  //     console.log(token.accessToken);
 
-  get account() {
-    return this.msalService.instance.getActiveAccount();
-  }
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // }
+
+  // logout() {
+  //   this.msalService.logoutPopup();
+  // }
+
+  // get account() {
+  //   return this.msalService.instance.getActiveAccount();
+  // }
 }

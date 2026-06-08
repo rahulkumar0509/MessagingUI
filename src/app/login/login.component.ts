@@ -35,28 +35,40 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  login() {
-    this.msalService.instance.loginRedirect({
-      scopes: ['openid', 'profile', 'email']
-    });
+  async login() {
+    const result = await this.msalService.instance.loginRedirect({
+        scopes: ['openid', 'profile', 'email', 'api://1d3b040d-8718-427f-a3b0-f194941f9643/access_as_user'],
+        prompt: 'select_account'
+      });
+
+      const token =
+        await this.msalService.instance.acquireTokenSilent({
+          scopes: [
+            'api://1d3b040d-8718-427f-a3b0-f194941f9643/access_as_user'
+          ],
+          account:
+            this.msalService.instance.getActiveAccount()!
+        });
+
+      console.log(token.accessToken);
   }
 
   
-  async loginUser() {
+  // async loginUser() {
 
-    // Custom API login below...
-    let apirUrl = environment.messageApiUrl;
-    this.http.get<LoginResponse>(`${apirUrl}/login?Email=${this.loginForm.value.email}`).pipe(catchError(this.handleError)).subscribe({
-      next: (v) => {
-        sessionStorage.setItem("accessToken", v.accessToken);
-        sessionStorage.setItem("userEmail", this.loginForm.value.email);
-        this.router.navigateByUrl("chat");
-      },
-      error: (e) => {
-        console.log(e);
-      }
-    })
-  }
+  //   // Custom API login below...
+  //   let apirUrl = environment.messageApiUrl;
+  //   this.http.get<LoginResponse>(`${apirUrl}/login?Email=${this.loginForm.value.email}`).pipe(catchError(this.handleError)).subscribe({
+  //     next: (v) => {
+  //       sessionStorage.setItem("accessToken", v.accessToken);
+  //       sessionStorage.setItem("userEmail", this.loginForm.value.email);
+  //       this.router.navigateByUrl("chat");
+  //     },
+  //     error: (e) => {
+  //       console.log(e);
+  //     }
+  //   })
+  // }
 
   handleError(err: HttpErrorResponse) {
     if (err.status === 401) {

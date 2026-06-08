@@ -8,14 +8,15 @@ import {
   MSAL_INSTANCE,
   MsalService
 } from '@azure/msal-angular';
-
+// client ID/Application ID: f40d781f-595b-4389-abe6-d7a42432199e
+// Tenant Id/Directory: 7a96d0ac-ddc2-4494-982d-06aae93bdb0f
 export function msalInstanceFactory() {
   return new PublicClientApplication({
     auth: {
-      clientId: 'fc530a19-8028-44b7-923a-d6c547712d02',
+      clientId: '0a8bf525-4df8-423a-9862-a692b11ee1ff',
       authority:
-        'https://login.microsoftonline.com/a4dd4c5f-fda6-4bde-8f21-cbc02d0bf15f',
-      redirectUri: window.location.origin,
+        'https://login.microsoftonline.com/7a96d0ac-ddc2-4494-982d-06aae93bdb0f',
+      redirectUri: 'http://localhost:4200',
     },
     cache: {
       cacheLocation: BrowserCacheLocation.LocalStorage
